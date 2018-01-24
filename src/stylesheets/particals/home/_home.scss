@@ -127,8 +127,11 @@
                         line-height: 0.25rem;
                         text-align: center;
                         font-size: 0.12rem;
-                        color: #f33;
                         border-radius: 3px;
+                        a{
+                            display: inline-block;
+                            color: #f33;
+                        }
                     }
                 }
             }

@@ -34,6 +34,12 @@ class Trophy extends Component {
 		this.loadData(type)
 		
 	}
+	
+	gameURL(id){
+		
+		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
+	}
+	
 	loadData(type){
 		
 		axios.post('/dola/app/game/newgetgameleaderboard',qs.stringify({
@@ -87,7 +93,7 @@ class Trophy extends Component {
 										<span className='list-desc'>{item.description}</span>
 									</div>
 								</Link>
-								<button>开始</button>
+								<button ><a href={this.gameURL(item.id)}>开始</a></button>
 							</div>
 						))
 					}

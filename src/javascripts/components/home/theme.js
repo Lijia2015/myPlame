@@ -12,6 +12,11 @@ class Theme extends Component{
 		}
 	}
 	
+	gameURL(id){
+		
+		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
+	}
+	
 	render(){
 		let {data} = this.props;
 		console.log(data)
@@ -53,7 +58,9 @@ class Theme extends Component{
 															<span className='intro'>{list.description}</span>
 														</div>	
 													</Link>
-													<p className='btn'>开始</p>
+													<p className='btn'>
+														<a href={this.gameURL(list.id)}>开始</a>
+													</p>
 												</div>
 											))
 										}

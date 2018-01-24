@@ -54,10 +54,12 @@
             height: 0.25rem;
             width: 0.6rem;
             border: 1px solid #ff2741;
-            color: #ff2741;
             border-radius: 2px;
             background: #fff; 
-            font-size: 0.12rem;     
+            font-size: 0.12rem; 
+            a{
+                color: #ff2741;
+            }    
         }
         
     }

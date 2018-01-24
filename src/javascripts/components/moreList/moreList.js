@@ -17,6 +17,11 @@ class MoreList extends Component{
 		this.props.history.goBack()
 	}
 	
+	gameURL(id){
+		
+		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
+	}
+	
 	getDataUp(id){
 		axios.post('/dola/app/game/newgetthemegamelist',qs.stringify({
 			page:this.state.page,
@@ -69,7 +74,7 @@ class MoreList extends Component{
 										</div>
 									</div>
 								</Link>
-								<button>开始</button>
+								<button ><a href={this.gameURL(item.id)} style={{color:'#ff2741'}}>开始</a></button>
 							</div>
 						))
 					}

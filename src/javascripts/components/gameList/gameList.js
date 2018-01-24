@@ -17,6 +17,11 @@ class GameList extends Component{
 		}
 	}
 	
+	gameURL(id){
+		
+		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
+	}
+	
 	goBack(){
 		
 		this.props.history.goBack()
@@ -94,7 +99,7 @@ class GameList extends Component{
 										</div>
 									</div>
 								</Link>
-								<button>开始</button>
+								<button ><a href={this.gameURL(item.id)} style={{color:'#ff2741'}}>开始</a></button>
 							</div>
 						))
 					}
