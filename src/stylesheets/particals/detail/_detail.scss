@@ -1,0 +1,191 @@
+.detail-container{
+    padding-bottom: 0.49rem;
+    .head-info{
+        height: 0.98rem;
+        border-bottom: solid 0.1rem #efefef;
+        padding: 0 0.1rem;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        img{
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 6px;
+        }
+        .intro{
+            flex: 1;
+            padding: 0 0.1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .sign{
+                font-size: 0.12rem;
+                width: 0.6rem;
+                text-align: center;
+                color: #fff;
+            }
+            .desc{
+                font-size: 0.12rem;
+                color: #999;
+                width: 2.65rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .hideEl{
+        display: none;
+    }
+    
+    h3{
+        height: 0.44rem;
+        line-height: 0.44rem;
+        font-size: 0.15rem;
+        color: #555;
+    }
+    
+    .game-intro{
+        .img-scro{
+            width: 100%;
+            padding: 0.05rem;
+            overflow-x: scroll;
+            display: flex;
+            img{
+                margin-right: 0.05rem;
+                height: 2.275rem;
+            }
+        }
+        .intro{
+            padding: 0 0.1rem;
+            border-bottom: solid 0.1rem #efefef;
+            p{
+                color: #999;
+                font-size: 0.14rem;
+            }
+        }
+        
+    }
+    
+    
+    .recommend{
+        h3{
+            border-bottom: solid 1px #efefef;
+            padding: 0 0.1rem;
+        }
+        .rec-item{
+            display: flex;
+            overflow-x: scroll;
+            padding: 0.1rem;
+            .item{
+                width: 25%;
+                display: flex;
+                align-content: center;
+                align-items: center;
+                flex-direction: column;
+                img{
+                    width: 0.6rem;
+                    height: 0.6rem;
+                }
+                span{
+                    display: inline-block;
+                    text-align: center;
+                    padding: 0.05rem 0;
+                    width: 100%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+    
+    .presentEL{
+        border-bottom: solid 0.1rem #efefef;
+        .pre-item{
+            display: flex;
+            padding: 0.1rem;
+            align-content: center;
+            align-items: center;
+            border-bottom: solid 1px #efefef;
+            .pre-info{
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                span{
+                    color: #999;
+                    line-height: 0.25rem;
+                }
+                .pre-count{
+                    color: #555;
+                }
+            }
+            button{
+                width: 0.54rem;
+                height: 0.24rem;
+                background: #ff2741;
+                color: #fff;
+                font-size: 0.12rem;
+                border: 0 none;
+                border-radius: 3px;
+            }
+        }
+    }
+    .emptyEL{
+        height: 1.2rem;
+        padding: 0 0.1rem;
+        text-align: center;
+        line-height: 1.2rem;
+        color: #999;
+        font-size: 0.14rem;
+    }
+}
+.action-footer{
+    height: 0.49rem;
+    border-top: solid 1px #efefef;
+    position: fixed;
+    z-index: 66;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    width: 100%;
+    display: flex;
+    .div{
+        height: 100%;
+        text-align: center;
+    }
+    .b-left{
+        width: 63%;
+        display: flex;
+        line-height: 0.49rem;
+        color: #555;
+        font-size: 0.14rem;
+        div{
+            padding-left: 0.2rem;
+            span{
+                padding-left: 0.03rem;
+            }
+            i{
+                font-size: 0.16rem;
+            }
+        }
+    }
+    .b-right{
+        width: 37%;
+        line-height: 0.49rem;
+        text-align: center;
+        background: $base-color;
+        font-weight: bold;
+        a{
+            color: #fff;
+        }
+        i{
+            font-size: 0.2rem;
+        }
+        span{
+            font-size: 0.16rem;
+            padding-left: 0.03rem;
+        }
+    }
+}
+

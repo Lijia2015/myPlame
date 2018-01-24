@@ -1,0 +1,33 @@
+.category-content{
+    .class-item{
+        
+        height: 0.55rem;
+        padding-left: 0.1rem;
+        .item{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: space-between;
+            border-bottom: solid 1px #efefef;
+            padding-right: 0.1rem;
+            .item-info{
+                display: flex;
+                align-content: center;
+                align-items: center;
+                span{
+                    padding-left: 0.1rem;
+                    color: #555;
+                }
+                img{
+                    height: 0.2rem;
+                    width: 0.2rem;
+                }
+            }
+            i{
+                font-size: 0.2rem;
+                color: #999;
+            }
+        }
+    }
+}
