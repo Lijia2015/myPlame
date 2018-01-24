@@ -19,7 +19,7 @@ class ClassList extends Component{
 			<div className='class-list clearfix'>
 				{
 					data.map(item=>(
-						<Link to={'/list/'+item.id} key={item.id}>
+						<Link to={{pathname:'/list/'+item.id,query:{name:item.name}}} key={item.id}>
 							<div  className='list-item'>
 								<img src={item.image} alt={item.name}/>
 								<p>{item.name}</p>

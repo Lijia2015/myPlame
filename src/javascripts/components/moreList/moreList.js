@@ -1,19 +1,14 @@
 import React,{Component} from 'react'
 import axios from 'axios'
-import qs from 'qs'
 import {Link} from 'react-router'
-class GameList extends Component{
+import qs from 'qs'
+class MoreList extends Component{
 	
 	constructor(props){
 		super(props);
 		this.state = {
-			navs:[
-				{title:'最热',id:1},
-				{title:'最新',id:2}
-			],
-			gameList:[],
 			page:1,
-			type:1
+			gameList:[]
 		}
 	}
 	
@@ -22,43 +17,36 @@ class GameList extends Component{
 		this.props.history.goBack()
 	}
 	
-	changeShow(type){
-		this.setState({
-			type,
-			gameList:[]
-		})
-		setTimeout(()=>{
-			this.getDataUp(this.props.routeParams.id)
-		},0)
-	}
-	
-	getDataUp(classId){
-		let that = this
-		axios.post('/dola/app/game/newgetgamelist',qs.stringify({
-			type:that.state.type,
-			page:that.state.page,
-			classId
+	getDataUp(id){
+		axios.post('/dola/app/game/newgetthemegamelist',qs.stringify({
+			page:this.state.page,
+			type:1,
+			themeId:id
 		})).then((res)=>{
+			console.log(res)
 			
-			that.setState({
+			this.setState({
 				gameList:res.data.data.gameList
 			})
 			
 		}).catch((err)=>{
-			console.log(err,'数据请求错啦')
+			console.log(err,'数据请求出错了')
 		})
 	}
 	
 	componentWillMount(){
-		this.getDataUp(this.props.routeParams.id)
+		
+		this.getDataUp(this.props.params.id)
 	}
 	
 	render(){
-		console.log(this)
+		
 		let {gameList} = this.state
 		
-		return(
-			<div className='list-container'>
+		
+		return (
+			
+			<div className='more-container'>
 				<header>
 					<div className='left' onClick={this.goBack.bind(this)}>
 						<i className='fa fa-angle-left'></i>
@@ -67,19 +55,6 @@ class GameList extends Component{
 						<div className='right'>
 					</div>
 				</header>
-				
-				<div className='nav-bar'>
-					{
-						this.state.navs.map(item=>(
-							<div key={item.id} className='nav' onClick={()=>this.changeShow(item.id)}>
-								<span className={this.state.type===item.id?'curN':''}>
-									{item.title}
-								</span>
-							</div>
-						))
-					}
-				</div>
-				
 				<div className='list-content clearfix'>
 					{
 						gameList.map(item=>(
@@ -89,7 +64,7 @@ class GameList extends Component{
 										<img src={item.image} alt={item.name}/>
 										<div className='intro'>
 											<span className='name'>{item.name}</span>
-											<span className='count'>{item.playCount}正在玩</span>
+											<span className='sign' style={{background:item.labelList[0].color}}>{item.labelList[0].name}</span>
 											<span className='desc'>{item.description}</span>
 										</div>
 									</div>
@@ -105,4 +80,4 @@ class GameList extends Component{
 	}
 }
 
-export default GameList
+export default MoreList

@@ -47,7 +47,7 @@ class Category extends Component {
 				<div className='category-content'>
 					{
 						classList.map(item=>(
-							<Link to={'/list/'+item.id} key={item.id}>
+							<Link to={{pathname:'/list/'+item.id,query:{name:item.name}}} key={item.id}>
 								<div className='class-item'>
 									<div className='item'>
 										<div className='item-info'>

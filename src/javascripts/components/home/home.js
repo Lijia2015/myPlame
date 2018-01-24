@@ -24,7 +24,9 @@ class Home extends Component {
 		
 		let that = this;
 		
-		axios.post('/dola/app/mainpage/newgetmainpagelist',qs.stringify({page}))
+		axios.post('/dola/app/mainpage/newgetmainpagelist',qs.stringify({
+			page
+		}))
 		.then(({data})=>{
 			
 			that.setState({

@@ -36,6 +36,9 @@
 }
 
 .theme-list{
+    a{
+        color: #555;
+    }
     .item-container{
         border-top: solid 0.1rem #eee;
         color: #555;
@@ -57,9 +60,6 @@
         }
         .item-content{
             padding:0.1rem 0 0;
-            a{
-                color: #555;
-            }
             .row-tt{
                 width: 100%;
                 display: flex;

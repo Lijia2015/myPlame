@@ -22,7 +22,7 @@ class Theme extends Component{
 						<div key={item.id} className='item-container clearfix'>
 							<div className='item-title'>
 								<span>{item.title}</span>
-								{item.type==='1'?<span className='more'>更多</span>:''}
+								{item.type==='1'?<Link to={{pathname:'/more/'+item.id,query:{name:item.title}}}><span className='more'>更多</span></Link>:''}
 							</div>
 							{
 								item.image?<Link to={'/detail/'+item.imageId}><img src={item.image} alt={item.title} className={item.imageId==='0'?'imgH title-img':'title-img'} /></Link>:''

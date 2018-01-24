@@ -16,6 +16,7 @@ import Category from './javascripts/components/category/category'
 import Mine from './javascripts/components/mine/mine'
 import Detail from './javascripts/components/detail/detail'
 import GameList from './javascripts/components/gameList/gameList'
+import MoreList from './javascripts/components/moreList/moreList'
 
 let routes = <Provider store={store}>
 <Router history={hashHistory}>
@@ -27,6 +28,7 @@ let routes = <Provider store={store}>
 		<Route path='mine' component={Mine} />
 		<Route path='detail/:id' component={Detail} />
 		<Route path='list/:id' component={GameList} />
+		<Route path='more/:id' component={MoreList} />
 		<Route path='*' component={Home} />
 	</Route>
 </Router>
