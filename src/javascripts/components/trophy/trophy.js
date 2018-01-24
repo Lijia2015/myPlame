@@ -50,6 +50,7 @@ class Trophy extends Component {
 		})
 		
 	}
+	
 	componentWillMount(){
 		this.loadData(this.state.type)
 	}
