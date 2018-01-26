@@ -1,5 +1,4 @@
 .detail-container{
-    padding-bottom: 0.49rem;
     .head-info{
         height: 0.98rem;
         border-bottom: solid 0.1rem #efefef;
@@ -123,11 +122,14 @@
             button{
                 width: 0.54rem;
                 height: 0.24rem;
-                background: #ff2741;
+                background: #ddd;
                 color: #fff;
                 font-size: 0.12rem;
                 border: 0 none;
                 border-radius: 3px;
+            }
+            .ownBtn{
+                background: #ff2741;
             }
         }
     }

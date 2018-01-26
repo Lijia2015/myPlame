@@ -12,7 +12,7 @@ class Edit extends Component{
 	
 	loginOut(){
 		
-		localStorage.removeItem('user')
+		sessionStorage.removeItem('user')
 		
 		this.props.toLoginOut();
 		

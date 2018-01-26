@@ -73,7 +73,7 @@ class Register extends Component{
 			
 		})).then((res)=>{
 			console.log(res,'注册成功了')
-			localStorage.user = JSON.stringify(res.data.data)
+			sessionStorage.user = JSON.stringify(res.data.data)
 			setTimeout(()=>{
 				this.props.toLogin()
 				hashHistory.push('/mine')
@@ -87,7 +87,6 @@ class Register extends Component{
 	}
 	
 	render(){
-		console.log(this.state)
 		return (
 			<div className="login-container com-box">
 				<header>

@@ -62,43 +62,44 @@ class Trophy extends Component {
 	render(){
 		console.log(this,'数据更改了')
 		return (
-			<div className='home-container main-box com-box'>
-				
-				<Header context={'榜单'}/>
-				<div className={this.state.top>150?'nav-bar fixed-bar':'nav-bar'}>
-					{
-						this.state.navs.map(item=>(
-							<div key={item.id} className='nav' onClick={()=>this.changeShow(item.type)}>
-								<span className={this.state.type===item.type?'curN':''}>
-									{item.title}
-								</span>
-							</div>
-						))
-					}
+			<div className='home-container main-box'>
+				<div className='com-box'>
+					
+					<Header context={'榜单'}/>
+					<div className={this.state.top>150?'nav-bar fixed-bar':'nav-bar'}>
+						{
+							this.state.navs.map(item=>(
+								<div key={item.id} className='nav' onClick={()=>this.changeShow(item.type)}>
+									<span className={this.state.type===item.type?'curN':''}>
+										{item.title}
+									</span>
+								</div>
+							))
+						}
+					</div>
+					<div className='home-content'>
+						{
+							this.state.gameList.map((item,i)=>(
+								<div key={item.id} className='list-item'>
+									<Link to={'/detail/'+item.id} className='item-content'>
+										<span>{i+1}</span>
+										<div className='imgEl'>
+											<img src={item.image} alt={item.name}/>
+										</div>
+										<div className='list-info'>
+											<span className='list-name'>{item.name}</span>
+											<span className='list-sign' style={{background:item.labelList[0].color}}>{item.labelList[0].name}</span>
+											<span className='list-desc'>{item.description}</span>
+										</div>
+									</Link>
+									<button ><a href={this.gameURL(item.id)}>开始</a></button>
+								</div>
+							))
+						}
+					</div>
+					<Foot path='/trophy'/>
 				</div>
-				<div className='home-content'>
-					{
-						this.state.gameList.map((item,i)=>(
-							<div key={item.id} className='list-item'>
-								<Link to={'/detail/'+item.id} className='item-content'>
-									<span>{i+1}</span>
-									<div className='imgEl'>
-										<img src={item.image} alt={item.name}/>
-									</div>
-									<div className='list-info'>
-										<span className='list-name'>{item.name}</span>
-										<span className='list-sign' style={{background:item.labelList[0].color}}>{item.labelList[0].name}</span>
-										<span className='list-desc'>{item.description}</span>
-									</div>
-								</Link>
-								<button ><a href={this.gameURL(item.id)}>开始</a></button>
-							</div>
-						))
-					}
-				</div>
-				<Foot path='/trophy'/>
 			</div>
-			
 		);
 	}
 }

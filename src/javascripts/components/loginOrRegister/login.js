@@ -45,7 +45,7 @@ class Login extends Component{
 			
 			console.log(res,'登录成功了')
 			
-			localStorage.user = JSON.stringify(res.data.data)
+			sessionStorage.user = JSON.stringify(res.data.data)
 			setTimeout(()=>{
 				this.props.toLogin()
 				hashHistory.push('/mine')
@@ -60,7 +60,6 @@ class Login extends Component{
 	}
 	
 	render(){
-		console.log(this.state,'login')
 		return (
 			<div className="login-container com-box">
 				<header>

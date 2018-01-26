@@ -17,8 +17,6 @@ class Foot extends Component{
 	
 	render(){
 		
-		console.log(this,'footer')
-		
 		let {navs} = this.state;
 		return (
 			<div className='foot-content'>

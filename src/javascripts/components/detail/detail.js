@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import axios from 'axios'
 import qs from 'qs'
 import {connect} from 'react-redux'
-
+import {hashHistory} from 'React-router'
 class Detail extends Component{
 	constructor(props){
 		super(props);
@@ -13,7 +13,7 @@ class Detail extends Component{
 				{title:'游戏简介',id:1},
 				{title:'游戏礼包',id:2}
 			],
-			
+			isFavourite:0
 		}
 	}
 	
@@ -31,10 +31,97 @@ class Detail extends Component{
 		this.getDataUp(this.props.routeParams.id)
 	}
 	
+	collectOrCancel(id){
+		if(this.props.user){
+			
+			let params = {
+				
+				gid:id,
+				uid:this.props.user.uid,
+				token:this.props.user.token
+			}
+			
+			if(this.state.isFavourite){
+				
+				axios.post('/dola/app/game/cancelfavourite',qs.stringify(params)).then((res)=>{
+					
+					if(res.data.status){
+						
+						this.setState({
+							
+							isFavourite:0
+						})
+						
+					}else{
+						console.log('取消收藏失败')
+					}
+					
+				}).catch((err)=>{
+					
+					console.log(err,'取消收藏失败')
+				})
+				
+			}else{
+				
+				axios.post('/dola/app/game/addfavourite',qs.stringify(params)).then((res)=>{
+					
+					if(res.data.status){
+						
+						this.setState({
+							
+							isFavourite:1
+						})
+						
+					}else{
+						console.log('收藏失败')
+					}
+					
+				}).catch((err)=>{
+					
+					console.log(err,'收藏失败')
+				})
+				
+			}
+			
+			
+		}else{
+			
+			hashHistory.push('/login')
+		}
+		
+	}
+	
+	getPresent(params){
+		
+		console.log(params)
+		
+		if(this.props.user){
+			
+			axios.post('/dola/app/game/newpickuppresent',qs.stringify(params)).then((res)=>{
+				
+				if(res.data.status){
+					console.log(res,'礼包领取成功')
+				}else{
+					console.log('礼包领取失败')
+				}
+				
+			}).catch((err)=>{
+				
+				console.log('礼包领取失败')
+			})
+			
+			
+		}else{
+			
+			hashHistory.push('/login')
+			
+		}
+		
+	}
 	
 	getDataUp(id){
 		
-		let parmas = this.props.user?{
+		let params = this.props.user?{
 			gid:id,
 			uid:this.props.user.uid,
 			token:this.props.user.token
@@ -42,10 +129,11 @@ class Detail extends Component{
 			gid:id
 		}
 		
-		axios.post('/dola/app/game/newgetgamedetail',qs.stringify(parmas)).then((res)=>{
+		axios.post('/dola/app/game/newgetgamedetail',qs.stringify(params)).then((res)=>{
 			let {data} = res.data
 			this.setState({
-				data
+				data,
+				isFavourite:res.data.data.isFavourite
 			})
 			
 		}).catch((err)=>{
@@ -54,10 +142,11 @@ class Detail extends Component{
 		
 	}
 	
+	
 	render(){
 		console.log(this,'detail')
 		
-		let {data} = this.state
+		let {data,isFavourite} = this.state
 		let sign = data.labelList?data.labelList[0]:{}
 		let imageList = data.imageList?data.imageList:[]
 		let recommendList = data.recommendList?data.recommendList:[]
@@ -65,8 +154,8 @@ class Detail extends Component{
 		let gameURL = 'http://www.dolapocket.com/game/index_new.php?gid='+this.props.routeParams.id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+this.props.routeParams.id
 		return(
 			
-			<div>
-				<div className='detail-container com-box'>
+			<div className='detail-container main-box'>
+				<div className='com-box'>
 					<header>
 						<div className='left' onClick={this.goBack.bind(this)}>
 							<i className='fa fa-angle-left'></i>
@@ -121,7 +210,9 @@ class Detail extends Component{
 												<span className='pre-content'>礼包内容 : {item.description}</span>
 												<span className='pre-time'>有效时间 : {item.time}</span>
 											</div>
-											<button>领取</button>
+											<button className={item.status?'':'ownBtn'} onClick={()=>this.getPresent({uid:this.props.user.uid,token:this.props.user.token,presentId:item.id})}>
+												{item.status?'已领取':'领取'}
+											</button>
 										</div>
 									))
 								}
@@ -144,9 +235,9 @@ class Detail extends Component{
 				</div>
 				<div className='action-footer'>
 					<div className='b-left'>
-						<div className={data.isFavourite?'isFa':''}>
-							<i className={data.isFavourite?'fa fa-heart':'fa fa-heart-o'}></i>
-							<span>{data.isFavourite?'已收藏 ':'收藏'}</span>
+						<div className={isFavourite?'isFa':''} onClick={()=>this.collectOrCancel(this.props.routeParams.id)}>
+							<i className={isFavourite?'fa fa-heart':'fa fa-heart-o'}></i>
+							<span>{isFavourite?'已收藏 ':'收藏'}</span>
 						</div>
 						<div>
 							<i className="fa fa-share"></i>

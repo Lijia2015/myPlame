@@ -45,18 +45,20 @@ class Home extends Component {
 	render(){
 		let {data} = this.state
 		return (
-			<div className='home-container main-box com-box clearfix'>
-				<header>
-					<div className='left'></div>
-					<div className='title'>首页</div>
-					<div className='right'>
-						<i className='fa fa-search'></i>
-					</div>
-				</header>
-				<Banner data={data.bannerList}/>
-				<ClassList data={data.classList}/>
-				<Theme data={data.themeList}/>
-				<Foot path='/home'/>
+			<div className='home-container main-box '>
+				<div className='com-box clearfix'>
+					<header>
+						<div className='left'></div>
+						<div className='title'>首页</div>
+						<div className='right'>
+							<i className='fa fa-search'></i>
+						</div>
+					</header>
+					<Banner data={data.bannerList}/>
+					<ClassList data={data.classList}/>
+					<Theme data={data.themeList}/>
+					<Foot path='/home'/>
+				</div>
 			</div>
 			
 		);

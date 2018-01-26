@@ -37,34 +37,36 @@ class Category extends Component {
 		let {classList} = this.state
 		console.log(this.state,'render')
 		return (
-			<div className='category-container main-box com-box'>
-				<header>
-					<div className='left'></div>
-					<div className='title'>分类</div>
-					<div className='right'>
-					</div>
-				</header>
-				<div className='category-content'>
-					{
-						classList.map(item=>(
-							<Link to={{pathname:'/list/'+item.id,query:{name:item.name}}} key={item.id}>
-								<div className='class-item'>
-									<div className='item'>
-										<div className='item-info'>
-											<img src={item.image} alt={item.name}/>
-											<span>{item.name}</span>
-										</div>
-										<i className='fa fa-angle-right'></i>
-									</div>
-								</div>
-							</Link>
-						))
-					}
-					
-				</div>
-				<Foot path='/category'/>
-			</div>
 			
+			<div className='category-container main-box'>
+				<div className='com-box'>
+					<header>
+						<div className='left'></div>
+						<div className='title'>分类</div>
+						<div className='right'>
+						</div>
+					</header>
+					<div className='category-content'>
+						{
+							classList.map(item=>(
+								<Link to={{pathname:'/list/'+item.id,query:{name:item.name}}} key={item.id}>
+									<div className='class-item'>
+										<div className='item'>
+											<div className='item-info'>
+												<img src={item.image} alt={item.name}/>
+												<span>{item.name}</span>
+											</div>
+											<i className='fa fa-angle-right'></i>
+										</div>
+									</div>
+								</Link>
+							))
+						}
+						
+					</div>
+					<Foot path='/category'/>
+				</div>
+			</div>
 		);
 	}
 }
