@@ -63,7 +63,7 @@ class GameList extends Component{
 		let {gameList} = this.state
 		
 		return(
-			<div className='list-container'>
+			<div className='list-container com-box'>
 				<header>
 					<div className='left' onClick={this.goBack.bind(this)}>
 						<i className='fa fa-angle-left'></i>

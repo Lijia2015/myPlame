@@ -10,12 +10,15 @@ class Foot extends Component{
 				{id:1,name:'首页',icon:'home',path:'/home'},
 				{id:2,name:'榜单',icon:'trophy',path:'/trophy'},
 				{id:3,name:'分类',icon:'bars',path:'/category'},
-				{id:4,name:'我的',icon:'user-o',path:'/mine'}
+				{id:4,name:'我的',icon:'user-o',path:this.props.user?'/mine':'/login'}
 			]
 		}
 	}
 	
 	render(){
+		
+		console.log(this,'footer')
+		
 		let {navs} = this.state;
 		return (
 			<div className='foot-content'>

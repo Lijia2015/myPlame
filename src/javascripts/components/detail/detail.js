@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import axios from 'axios'
 import qs from 'qs'
+import {connect} from 'react-redux'
 
 class Detail extends Component{
 	constructor(props){
@@ -12,7 +13,6 @@ class Detail extends Component{
 				{title:'游戏简介',id:1},
 				{title:'游戏礼包',id:2}
 			],
-			
 			
 		}
 	}
@@ -34,7 +34,15 @@ class Detail extends Component{
 	
 	getDataUp(id){
 		
-		axios.post('/dola/app/game/newgetgamedetail',qs.stringify({gid:id})).then((res)=>{
+		let parmas = this.props.user?{
+			gid:id,
+			uid:this.props.user.uid,
+			token:this.props.user.token
+		}:{
+			gid:id
+		}
+		
+		axios.post('/dola/app/game/newgetgamedetail',qs.stringify(parmas)).then((res)=>{
 			let {data} = res.data
 			this.setState({
 				data
@@ -47,6 +55,7 @@ class Detail extends Component{
 	}
 	
 	render(){
+		console.log(this,'detail')
 		
 		let {data} = this.state
 		let sign = data.labelList?data.labelList[0]:{}
@@ -54,11 +63,10 @@ class Detail extends Component{
 		let recommendList = data.recommendList?data.recommendList:[]
 		let presentList = data.presentList?data.presentList:[]
 		let gameURL = 'http://www.dolapocket.com/game/index_new.php?gid='+this.props.routeParams.id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+this.props.routeParams.id
-		console.log(data)
 		return(
 			
 			<div>
-				<div className='detail-container'>
+				<div className='detail-container com-box'>
 					<header>
 						<div className='left' onClick={this.goBack.bind(this)}>
 							<i className='fa fa-angle-left'></i>
@@ -136,9 +144,9 @@ class Detail extends Component{
 				</div>
 				<div className='action-footer'>
 					<div className='b-left'>
-						<div>
-							<i className="fa fa-heart-o"></i>
-							<span>收藏</span>
+						<div className={data.isFavourite?'isFa':''}>
+							<i className={data.isFavourite?'fa fa-heart':'fa fa-heart-o'}></i>
+							<span>{data.isFavourite?'已收藏 ':'收藏'}</span>
 						</div>
 						<div>
 							<i className="fa fa-share"></i>
@@ -158,4 +166,10 @@ class Detail extends Component{
 	}
 }
 
-export default Detail
+//将redux中store的state传递到组件的props上
+let mapStateToProps = (state)=>{
+	
+	return state
+}
+
+export default connect(mapStateToProps)(Detail)

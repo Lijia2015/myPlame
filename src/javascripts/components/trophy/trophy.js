@@ -1,7 +1,5 @@
 import React,{Component} from 'react'
 import Foot from '../footer/footer';
-import {connect} from 'react-redux'
-import addNum from '../../../redux/actionCreaters/add_number'
 import Header from './headerNav'
 import {Link} from 'react-router'
 import axios from 'axios'
@@ -64,7 +62,7 @@ class Trophy extends Component {
 	render(){
 		console.log(this,'数据更改了')
 		return (
-			<div className='home-container main-box'>
+			<div className='home-container main-box com-box'>
 				
 				<Header context={'榜单'}/>
 				<div className={this.state.top>150?'nav-bar fixed-bar':'nav-bar'}>
@@ -105,19 +103,4 @@ class Trophy extends Component {
 	}
 }
 
-let mapStateToProps = (state) =>{
-	return {
-		_num:state.num
-	}
-}
-
-let mapDispatchToProps = (dispatch)=>{
-	
-	return {
-		addNumber:()=>{
-			dispatch(addNum())
-		}
-	}
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Trophy)
+export default Trophy

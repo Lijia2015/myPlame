@@ -51,7 +51,7 @@ class MoreList extends Component{
 		
 		return (
 			
-			<div className='more-container'>
+			<div className='more-container com-box'>
 				<header>
 					<div className='left' onClick={this.goBack.bind(this)}>
 						<i className='fa fa-angle-left'></i>

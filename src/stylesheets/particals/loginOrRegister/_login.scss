@@ -1,0 +1,66 @@
+.login-container{
+    .input-box{
+        padding-left: 0.1rem;
+        background: #fff;
+        .phone{
+             button{
+                 height: 0.35rem;
+                 width: 1rem;
+                 border: 0 none;
+                 background: $base-color;
+                 border-radius: 0.05rem;
+                 color: #fff;
+                 font-size: 0.15rem;
+                 outline: none;
+             }   
+        }
+        div{
+            height: 0.48rem;
+            padding-right: 0.1rem;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            border-bottom: solid 1px #f3f3f3;
+            span{
+                display: inline-block;
+                height: 0.2rem;
+                width: 0.7rem;
+            }
+            input{
+                height: 0.3rem;
+                flex: 1;
+                border: 0 none;
+                outline: none;
+            }
+        }
+    }
+    
+    .btn-box{
+        background: #f3f3f3;
+        display: flex;
+        padding-top: 0.3rem;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        button{
+            height: 0.4rem;
+            width: 3.1rem;
+            border: 0 none;
+            outline: none;
+            background: #ddd;
+            border-radius: 0.05rem;
+            color: #fff;
+            font-size: 0.18rem;
+        }
+        .sureBtn{
+            background: $base-color;
+        }
+        p{
+            color: #999;
+            padding-top: 0.05rem;
+        }
+    }
+    
+}
+
+

@@ -45,7 +45,7 @@ class Home extends Component {
 	render(){
 		let {data} = this.state
 		return (
-			<div className='home-container main-box clearfix'>
+			<div className='home-container main-box com-box clearfix'>
 				<header>
 					<div className='left'></div>
 					<div className='title'>首页</div>

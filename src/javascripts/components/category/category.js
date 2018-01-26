@@ -37,7 +37,7 @@ class Category extends Component {
 		let {classList} = this.state
 		console.log(this.state,'render')
 		return (
-			<div className='category-container main-box'>
+			<div className='category-container main-box com-box'>
 				<header>
 					<div className='left'></div>
 					<div className='title'>分类</div>

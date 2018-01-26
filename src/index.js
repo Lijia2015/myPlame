@@ -14,9 +14,12 @@ import Home from './javascripts/components/home/home'
 import Trophy from './javascripts/components/trophy/trophy'
 import Category from './javascripts/components/category/category'
 import Mine from './javascripts/components/mine/mine'
+import Edit from './javascripts/components/mine/edit'
 import Detail from './javascripts/components/detail/detail'
 import GameList from './javascripts/components/gameList/gameList'
 import MoreList from './javascripts/components/moreList/moreList'
+import Login from './javascripts/components/loginOrRegister/login'
+import Register from './javascripts/components/loginOrRegister/register'
 
 let routes = <Provider store={store}>
 <Router history={hashHistory}>
@@ -26,9 +29,12 @@ let routes = <Provider store={store}>
 		<Route path='trophy' component={Trophy} />
 		<Route path='category' component={Category} />
 		<Route path='mine' component={Mine} />
+		<Route path='edit' component={Edit} />
 		<Route path='detail/:id' component={Detail} />
 		<Route path='list/:id' component={GameList} />
 		<Route path='more/:id' component={MoreList} />
+		<Route path='login' component={Login} />
+		<Route path='register' component={Register} />
 		<Route path='*' component={Home} />
 	</Route>
 </Router>
