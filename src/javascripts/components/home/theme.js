@@ -1,16 +1,8 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 
+
 class Theme extends Component{
-	
-	shouldComponentUpdate(props){
-		
-		if(props.data.length === this.props.data.length){
-			return false
-		}else{
-			return true
-		}
-	}
 	
 	gameURL(id){
 		
@@ -19,7 +11,6 @@ class Theme extends Component{
 	
 	render(){
 		let {data} = this.props;
-		console.log(data)
 		return (
 			<div className='theme-list'>
 				{

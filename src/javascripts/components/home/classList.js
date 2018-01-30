@@ -14,7 +14,6 @@ class ClassList extends Component{
 	
 	render(){
 		let {data} = this.props;
-		console.log(data,'classlist')
 		return (
 			<div className='class-list clearfix'>
 				{

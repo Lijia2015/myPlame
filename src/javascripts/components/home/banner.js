@@ -28,7 +28,6 @@ class Banner extends Component{
 	
 	render(){
 		let {data} = this.props;
-		console.log(data,'banner')
 		return (
 			<div className='swiper-container banner'>
 				<div className="swiper-wrapper">

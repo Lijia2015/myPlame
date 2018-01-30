@@ -10,15 +10,15 @@ import qs from 'qs'
 class Home extends Component {
 	constructor(props){
 		super(props)
-		console.log(this,123142)
 		this.state = {
 			data:{
 				bannerList:[],
 				classList:[],
 				themeList:[],
 			},
-			page:1
+			
 		}
+		this.page = 1
 	}
 	loadData(page){
 		
@@ -30,6 +30,7 @@ class Home extends Component {
 		.then(({data})=>{
 			
 			that.setState({
+				
 				data:data.data
 			})
 			
@@ -40,9 +41,10 @@ class Home extends Component {
 	}
 	componentWillMount(){
 		
-		this.loadData(this.state.page)
+		this.loadData(this.page)
 	}
 	render(){
+		
 		let {data} = this.state
 		return (
 			<div className='home-container main-box '>
