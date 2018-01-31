@@ -11,6 +11,7 @@ import {Provider} from 'react-redux'
 
 //配置路由
 import Home from './javascripts/components/home/home'
+import Game from './javascripts/components/game/game'
 import Trophy from './javascripts/components/trophy/trophy'
 import Category from './javascripts/components/category/category'
 import Mine from './javascripts/components/mine/mine'
@@ -26,6 +27,7 @@ let routes = <Provider store={store}>
 	<Route path='/' component={App}>
 		<IndexRedirect to='home' />
 		<Route path='home' component={Home} />
+		<Route path='game/:id' component={Game} />
 		<Route path='trophy' component={Trophy} />
 		<Route path='category' component={Category} />
 		<Route path='mine' component={Mine} />

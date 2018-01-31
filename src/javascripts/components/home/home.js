@@ -4,18 +4,16 @@ import ClassList from './classList'
 import Theme from './theme'
 import Foot from '../footer/footer';
 import axios from 'axios'
-import {connect} from 'react-redux'
 import qs from 'qs'
+
+import {connect} from 'react-redux'
+import homeLoad from '../../../redux/actionCreaters/Home_Load'
+import loadMore from '../../../redux/actionCreaters/Home_loadMore'
+
 
 class Home extends Component {
 	constructor(props){
 		super(props)
-		this.state = {
-			bannerList:[],
-			classList:[],
-			themeList:[],
-			
-		}
 		this.page = 1
 	}
 	loadData(page){
@@ -28,39 +26,20 @@ class Home extends Component {
 		.then(({data})=>{
 			
 			console.log(data)
-			
-			that.setState({
+			if(page>1){
 				
-				bannerList:data.data.bannerList,
-				classList:data.data.classList,
-				themeList:data.data.themeList,
-			})
-			
-		})
-		.catch((err)=>{
-			console.log(err);
-		})
-	}
-	
-	loadMore(page){
-		
-		let that = this;
-		
-		axios.post('/dola/app/mainpage/newgetmainpagelist',qs.stringify({
-			page
-		}))
-		.then(({data})=>{
-			
-			console.log(data)
-			
-			if(data.data.themeList.length){
-				that.setState({
+				if(data.data.themeList.length){
 				
-					themeList:that.state.themeList.concat(data.data.themeList)
-				})
+					this.props.loadMore(data.data.themeList)
+					
+				}else{
+					window.onscroll = ''
+					alert('数据加载完毕了')
+				}
+				
 			}else{
-				window.onscroll = ''
-				alert('数据加载完毕了')
+				
+				that.props.homeLoad(data.data.bannerList,data.data.classList,data.data.themeList)
 			}
 			
 		})
@@ -74,7 +53,6 @@ class Home extends Component {
 		this.loadData(this.page)
 	}
 	
-	
 	handler(){
 		
 		let that = this;
@@ -86,7 +64,7 @@ class Home extends Component {
 				
 				that.page++
 				
-				that.loadMore(that.page)
+				that.loadData(that.page)
 			}
 			
 		}
@@ -105,7 +83,9 @@ class Home extends Component {
 	
 	render(){
 		
-		let {bannerList,themeList,classList} = this.state
+		console.log(this.props)
+		
+		let {_bannerList,_themeList,_classList} = this.props
 		
 		return (
 			<div className='home-container main-box ' ref='bodyBox'>
@@ -117,9 +97,9 @@ class Home extends Component {
 							<i className='fa fa-search'></i>
 						</div>
 					</header>
-					<Banner data={bannerList}/>
-					<ClassList data={classList}/>
-					<Theme data={themeList}/>
+					<Banner data={_bannerList}/>
+					<ClassList data={_classList}/>
+					<Theme data={_themeList}/>
 					<Foot path='/home'/>
 				</div>
 			</div>
@@ -128,4 +108,27 @@ class Home extends Component {
 	}
 }
 
-export default connect((state)=>state)(Home)
+let mapStateToProps = (state) =>{
+	return {
+		_user:state.user,
+		_bannerList:state.bannerList,
+		_classList:state.classList,
+		_themeList:state.themeList
+	}
+}
+
+let mapDispatchToProps = (dispatch)=>{
+	
+	return {
+		homeLoad:(bannerList,classList,themeList)=>{
+			
+			dispatch(homeLoad(bannerList,classList,themeList))
+		},
+		loadMore:(themeList)=>{
+			
+			dispatch(loadMore(themeList))
+		},
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home)

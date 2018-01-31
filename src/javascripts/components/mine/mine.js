@@ -65,6 +65,8 @@ class Mine extends Component {
 		
 		axios.post('/dola/app/game/newgethistorylist',qs.stringify(params)).then((res)=>{
 			
+			console.log(res.data.data.gameList)
+			
 			this.setState({
 				gameList:res.data.data.gameList
 			})
@@ -146,7 +148,7 @@ class Mine extends Component {
 										<div className='list-item' key={item.id}>
 											<Link to={'/detail/'+item.id}>
 												<div className='item-info'>
-													<img src={item.image} alt={item.name}/>
+													<img src={item.icon} alt={item.name}/>
 													<div className='intro'>
 														<span className='name'>{item.name}</span>
 														<span className='sign' style={{background:item.labelList[0].color}}>{item.labelList[0].name}</span>
@@ -154,7 +156,9 @@ class Mine extends Component {
 													</div>
 												</div>
 											</Link>
-											<button ><a href={this.gameURL(item.id)} style={{color:'#ff2741'}}>开始</a></button>
+											<button >
+												<Link to={{pathname:'/game/'+item.id,query:{name:item.name}}} style={{color:'#ff2741'}}>开始</Link>
+											</button>
 										</div>
 									))
 								}
@@ -173,7 +177,9 @@ class Mine extends Component {
 													</div>
 												</div>
 											</Link>
-											<button ><a href={this.gameURL(item.id)} style={{color:'#ff2741'}}>开始</a></button>
+											<button >
+												<Link to={{pathname:'/game/'+item.id,query:{name:item.name}}} style={{color:'#ff2741'}}>开始</Link>
+											</button>
 										</div>
 									))
 								}

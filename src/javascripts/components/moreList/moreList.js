@@ -30,31 +30,21 @@ class MoreList extends Component{
 		})).then((res)=>{
 			console.log(res)
 			
-			this.setState({
-				gameList:res.data.data.gameList
-			})
-			
-		}).catch((err)=>{
-			console.log(err,'数据请求出错了')
-		})
-	}
-	
-	loadMore(id){
-		axios.post('/dola/app/game/newgetthemegamelist',qs.stringify({
-			page:this.page,
-			type:1,
-			themeId:id
-		})).then((res)=>{
-			console.log(res)
-			
-			if(res.data.data.gameList.length){
-				this.setState({
-					gameList:this.state.gameList.concat(res.data.data.gameList)
-				})
+			if(this.page>1){
+				if(res.data.data.gameList.length){
+					this.setState({
+						gameList:this.state.gameList.concat(res.data.data.gameList)
+					})
+				}else{
+					alert('数据加载完毕了')
+				}
+				
 			}else{
-				alert('数据加载完毕了')
+				
+				this.setState({
+					gameList:res.data.data.gameList
+				})
 			}
-			
 		}).catch((err)=>{
 			console.log(err,'数据请求出错了')
 		})
@@ -76,7 +66,7 @@ class MoreList extends Component{
 				
 				that.page++
 				
-				that.loadMore(that.props.routeParams.id)
+				that.getDataUp(that.props.routeParams.id)
 			}
 			
 		}
@@ -123,7 +113,9 @@ class MoreList extends Component{
 										</div>
 									</div>
 								</Link>
-								<button ><a href={this.gameURL(item.id)} style={{color:'#ff2741'}}>开始</a></button>
+								<button >
+									<Link to={{pathname:'/game/'+item.id,query:{name:item.name}}} style={{color:'#f33'}}>开始</Link>
+								</button>
 							</div>
 						))
 					}

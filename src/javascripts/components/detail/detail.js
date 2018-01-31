@@ -3,6 +3,9 @@ import axios from 'axios'
 import qs from 'qs'
 import {connect} from 'react-redux'
 import {hashHistory} from 'React-router'
+import {Link} from 'react-router'
+
+
 class Detail extends Component{
 	constructor(props){
 		super(props);
@@ -151,7 +154,6 @@ class Detail extends Component{
 		let imageList = data.imageList?data.imageList:[]
 		let recommendList = data.recommendList?data.recommendList:[]
 		let presentList = data.presentList?data.presentList:[]
-		let gameURL = 'http://www.dolapocket.com/game/index_new.php?gid='+this.props.routeParams.id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+this.props.routeParams.id
 		return(
 			
 			<div className='detail-container main-box'>
@@ -246,10 +248,11 @@ class Detail extends Component{
 					</div>
 					
 					<div className='b-right'>
-						<a href={gameURL}>
+					
+						<Link to={{pathname:'/game/'+this.props.params.id,query:{name:this.state.data.name}}}>
 							<i className="fa fa-gamepad"></i>
 							<span>进入游戏</span>
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

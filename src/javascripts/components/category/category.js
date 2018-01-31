@@ -17,30 +17,24 @@ class Category extends Component {
 	getDataUp(page){
 		axios.post('/dola/app/game/newgetclasslist',qs.stringify({page})).then((res)=>{
 			
-			this.setState({
+			if(this.page > 1){
 				
-				classList:res.data.data.classList
-			})
-			
-		}).catch((err)=>{
-			
-			console.log(err,'请求错误')
-			
-		})
-	}
-	
-	loadMore(page){
-		axios.post('/dola/app/game/newgetclasslist',qs.stringify({page})).then((res)=>{
-			
-			if(res.data.data.classList.length){
+				if(res.data.data.classList.length){
+					this.setState({
+					
+						classList:res.data.data.classList
+					})
+				}else{
+					alert('数据加载完毕了')
+				}
+				
+			}else{
+				
 				this.setState({
 				
 					classList:res.data.data.classList
 				})
-			}else{
-				alert('数据加载完毕了')
 			}
-			
 			
 			
 		}).catch((err)=>{
@@ -49,12 +43,11 @@ class Category extends Component {
 			
 		})
 	}
-	
+
 	componentWillMount(){
 		
 		this.getDataUp(this.page)
 	}
-	
 	
 	handler(){
 		
@@ -67,7 +60,7 @@ class Category extends Component {
 				
 				that.page++
 				
-				that.loadMore(that.page)
+				that.getDataUp(that.page)
 			}
 			
 		}
@@ -83,8 +76,6 @@ class Category extends Component {
 		
 		window.onscroll = ''
 	}
-	
-	
 	
 	render(){
 		let {classList} = this.state

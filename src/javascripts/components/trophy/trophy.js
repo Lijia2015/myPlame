@@ -34,11 +34,6 @@ class Trophy extends Component {
 		
 	}
 	
-	gameURL(id){
-		
-		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
-	}
-	
 	loadData(type){
 		
 		axios.post('/dola/app/game/newgetgameleaderboard',qs.stringify({
@@ -46,33 +41,23 @@ class Trophy extends Component {
 			type
 		})).then(({data})=>{
 			console.log(data)
-			
-			this.setState({
-				gameList:data.data.gameList
-			})
-		}).catch((err)=>{
-			console.log('数据请求错误'+err)
-		})
-		
-	}
-	
-	loadMore(type){
-		
-		axios.post('/dola/app/game/newgetgameleaderboard',qs.stringify({
-			page:this.page,
-			type
-		})).then(({data})=>{
-			console.log(data,this.page)
-			
-			if(data.data.gameList.length){
-				this.setState({
-					gameList:this.state.gameList.concat(data.data.gameList)
-				})
+			if(this.page > 1){
+				
+				if(data.data.gameList.length){
+					this.setState({
+						gameList:this.state.gameList.concat(data.data.gameList)
+					})
+				}else{
+					
+					alert('数据加载完毕了')
+				}
+				
 			}else{
 				
-				alert('数据加载完毕了')
+				this.setState({
+					gameList:data.data.gameList
+				})
 			}
-			
 			
 		}).catch((err)=>{
 			console.log('数据请求错误'+err)
@@ -95,7 +80,7 @@ class Trophy extends Component {
 				
 				that.page++
 				
-				that.loadMore(that.state.type)
+				that.loadData(that.state.type)
 			}
 			
 		}
@@ -146,7 +131,9 @@ class Trophy extends Component {
 											<span className='list-desc'>{item.description}</span>
 										</div>
 									</Link>
-									<button ><a href={this.gameURL(item.id)}>开始</a></button>
+									<button >
+										<Link to={{pathname:'/game/'+item.id,query:{name:item.name}}}>开始</Link>
+									</button>
 								</div>
 							))
 						}

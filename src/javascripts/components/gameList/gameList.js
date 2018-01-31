@@ -17,11 +17,6 @@ class GameList extends Component{
 		this.page = 1
 	}
 	
-	gameURL(id){
-		
-		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
-	}
-	
 	goBack(){
 		
 		this.props.history.goBack()
@@ -46,29 +41,21 @@ class GameList extends Component{
 			classId
 		})).then((res)=>{
 			
-			that.setState({
-				gameList:res.data.data.gameList
-			})
-			
-		}).catch((err)=>{
-			console.log(err,'数据请求错啦')
-		})
-	}
-	
-	loadMore(classId){
-		let that = this
-		axios.post('/dola/app/game/newgetgamelist',qs.stringify({
-			type:that.state.type,
-			page:that.page,
-			classId
-		})).then((res)=>{
-			
-			if(res.data.data.gameList.length){
-				that.setState({
-					gameList:that.state.gameList.concat(res.data.data.gameList)
-				})
+			if(this.page > 1){
+				
+				if(res.data.data.gameList.length){
+					that.setState({
+						gameList:that.state.gameList.concat(res.data.data.gameList)
+					})
+				}else{
+					alert('数据加载完毕了')
+				}
+				
 			}else{
-				alert('数据加载完毕了')
+				
+				that.setState({
+					gameList:res.data.data.gameList
+				})
 			}
 			
 			
@@ -82,7 +69,6 @@ class GameList extends Component{
 		this.getDataUp(this.props.routeParams.id)
 	}
 	
-	
 	handler(){
 		
 		let that = this;
@@ -94,7 +80,7 @@ class GameList extends Component{
 				
 				that.page++
 				
-				that.loadMore(that.props.routeParams.id)
+				that.getDataUp(that.props.routeParams.id)
 			}
 			
 		}
@@ -152,7 +138,9 @@ class GameList extends Component{
 										</div>
 									</div>
 								</Link>
-								<button ><a href={this.gameURL(item.id)} style={{color:'#ff2741'}}>开始</a></button>
+								<button >
+									<Link to={{pathname:'/game/'+item.id,query:{name:item.name}}} style={{color:'#ff2741'}}>开始</Link>
+								</button>
 							</div>
 						))
 					}

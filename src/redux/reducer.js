@@ -1,6 +1,10 @@
 
 const defaultState = {//设置初始值
-	user:sessionStorage.user?JSON.parse(sessionStorage.user):''
+	user:sessionStorage.user?JSON.parse(sessionStorage.user):'',
+	bannerList:[],
+	classList:[],
+	themeList:[]
+	
 }
 
 //创建纯函数
@@ -14,6 +18,14 @@ const reducer = (state = defaultState,action) =>{
 			break;
 		case 'LOGIN_OUT':
 			new_state.user = ''
+			break;
+		case 'HOME-LOAD':
+			new_state.bannerList = action.bannerList
+			new_state.classList = action.classList
+			new_state.themeList = action.themeList
+			break;
+		case 'LOAD-MORE':
+			new_state.themeList = state.themeList.concat(action.themeList)
 			break;
 		default:
 			break;

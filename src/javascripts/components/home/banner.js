@@ -1,6 +1,5 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
-import 'swiper/dist/css/swiper.min.css'
 import Swiper from 'swiper'
 
 class Banner extends Component{
