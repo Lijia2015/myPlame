@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 import Swiper from 'swiper'
-
 class Banner extends Component{
 	
 	shouldComponentUpdate(props){
@@ -13,6 +12,7 @@ class Banner extends Component{
 		}
 	}
 	componentDidUpdate(){
+		
 		new Swiper('.banner',{
 			loop:true,
 			autoplay: {

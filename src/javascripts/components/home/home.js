@@ -88,7 +88,7 @@ class Home extends Component {
 		let {_bannerList,_themeList,_classList} = this.props
 		
 		return (
-			<div className='home-container main-box ' ref='bodyBox'>
+			<div className='home-container main-box' ref='bodyBox'>
 				<div className='com-box clearfix'>
 					<header>
 						<div className='left'></div>
