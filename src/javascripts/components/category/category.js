@@ -9,15 +9,16 @@ class Category extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			page:1,
 			classList:[]
 		}
+		this.page=1
 	}
 	
 	getDataUp(page){
 		axios.post('/dola/app/game/newgetclasslist',qs.stringify({page})).then((res)=>{
 			
 			this.setState({
+				
 				classList:res.data.data.classList
 			})
 			
@@ -28,17 +29,69 @@ class Category extends Component {
 		})
 	}
 	
+	loadMore(page){
+		axios.post('/dola/app/game/newgetclasslist',qs.stringify({page})).then((res)=>{
+			
+			if(res.data.data.classList.length){
+				this.setState({
+				
+					classList:res.data.data.classList
+				})
+			}else{
+				alert('数据加载完毕了')
+			}
+			
+			
+			
+		}).catch((err)=>{
+			
+			console.log(err,'请求错误')
+			
+		})
+	}
+	
 	componentWillMount(){
 		
-		this.getDataUp(this.state.page)
+		this.getDataUp(this.page)
 	}
+	
+	
+	handler(){
+		
+		let that = this;
+		window.onscroll = function(){
+			let sc = window.scrollY;
+			let h = window.screen.height;
+			let scH = that.refs.bodyBox.scrollHeight;
+			if(sc+h === scH){
+				
+				that.page++
+				
+				that.loadMore(that.page)
+			}
+			
+		}
+		
+	}
+	
+	componentDidMount(){
+		
+		this.handler.bind(this)()		
+	}
+	
+	componentWillUnmount(){
+		
+		window.onscroll = ''
+	}
+	
+	
 	
 	render(){
 		let {classList} = this.state
 		console.log(this.state,'render')
 		return (
 			
-			<div className='category-container main-box'>
+			<div className='category-container main-box' ref='bodyBox'>
 				<div className='com-box'>
 					<header>
 						<div className='left'></div>

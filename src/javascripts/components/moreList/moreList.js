@@ -7,9 +7,9 @@ class MoreList extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			page:1,
 			gameList:[]
 		}
+		this.page=1
 	}
 	
 	goBack(){
@@ -24,7 +24,7 @@ class MoreList extends Component{
 	
 	getDataUp(id){
 		axios.post('/dola/app/game/newgetthemegamelist',qs.stringify({
-			page:this.state.page,
+			page:this.page,
 			type:1,
 			themeId:id
 		})).then((res)=>{
@@ -39,9 +39,58 @@ class MoreList extends Component{
 		})
 	}
 	
+	loadMore(id){
+		axios.post('/dola/app/game/newgetthemegamelist',qs.stringify({
+			page:this.page,
+			type:1,
+			themeId:id
+		})).then((res)=>{
+			console.log(res)
+			
+			if(res.data.data.gameList.length){
+				this.setState({
+					gameList:this.state.gameList.concat(res.data.data.gameList)
+				})
+			}else{
+				alert('数据加载完毕了')
+			}
+			
+		}).catch((err)=>{
+			console.log(err,'数据请求出错了')
+		})
+	}
+	
 	componentWillMount(){
 		
 		this.getDataUp(this.props.params.id)
+	}
+	
+	handler(){
+		
+		let that = this;
+		window.onscroll = function(){
+			let sc = window.scrollY;
+			let h = window.screen.height;
+			let scH = that.refs.bodyBox.scrollHeight;
+			if(sc+h === scH){
+				
+				that.page++
+				
+				that.loadMore(that.props.routeParams.id)
+			}
+			
+		}
+		
+	}
+	
+	componentDidMount(){
+		
+		this.handler.bind(this)()		
+	}
+	
+	componentWillUnmount(){
+		
+		window.onscroll = ''
 	}
 	
 	render(){
@@ -51,7 +100,7 @@ class MoreList extends Component{
 		
 		return (
 			
-			<div className='more-container com-box'>
+			<div className='more-container com-box' ref='bodyBox'>
 				<header>
 					<div className='left' onClick={this.goBack.bind(this)}>
 						<i className='fa fa-angle-left'></i>

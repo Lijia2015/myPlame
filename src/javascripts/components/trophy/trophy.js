@@ -14,12 +14,12 @@ class Trophy extends Component {
 				{title:'总榜',type:1,id:1},
 				{title:'新锐',type:2,id:2}
 			],
-			page:1,
 			gameList:[],
 			isShow : true,
 			type:1,
 			top:0
 		}
+		this.page = 1
 		this.changeShow = this.changeShow.bind(this)
 	}
 	
@@ -29,6 +29,7 @@ class Trophy extends Component {
 			type,
 			gameList:[]
 		})
+		this.page = 1
 		this.loadData(type)
 		
 	}
@@ -41,7 +42,7 @@ class Trophy extends Component {
 	loadData(type){
 		
 		axios.post('/dola/app/game/newgetgameleaderboard',qs.stringify({
-			page:this.state.page,
+			page:this.page,
 			type
 		})).then(({data})=>{
 			console.log(data)
@@ -55,14 +56,67 @@ class Trophy extends Component {
 		
 	}
 	
+	loadMore(type){
+		
+		axios.post('/dola/app/game/newgetgameleaderboard',qs.stringify({
+			page:this.page,
+			type
+		})).then(({data})=>{
+			console.log(data,this.page)
+			
+			if(data.data.gameList.length){
+				this.setState({
+					gameList:this.state.gameList.concat(data.data.gameList)
+				})
+			}else{
+				
+				alert('数据加载完毕了')
+			}
+			
+			
+		}).catch((err)=>{
+			console.log('数据请求错误'+err)
+		})
+		
+	}
+	
 	componentWillMount(){
 		this.loadData(this.state.type)
 	}
+	
+	handler(){
+		
+		let that = this;
+		window.onscroll = function(){
+			let sc = window.scrollY;
+			let h = window.screen.height;
+			let scH = that.refs.bodyBox.scrollHeight;
+			if(sc+h === scH){
+				
+				that.page++
+				
+				that.loadMore(that.state.type)
+			}
+			
+		}
+		
+	}
+	
+	componentDidMount(){
+		
+		this.handler.bind(this)()		
+	}
+	
+	componentWillUnmount(){
+		
+		window.onscroll = ''
+	}
+	
 
 	render(){
 		console.log(this,'数据更改了')
 		return (
-			<div className='home-container main-box'>
+			<div className='home-container main-box ' ref='bodyBox'>
 				<div className='com-box'>
 					
 					<Header context={'榜单'}/>

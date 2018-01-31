@@ -12,9 +12,9 @@ class GameList extends Component{
 				{title:'最新',id:2}
 			],
 			gameList:[],
-			page:1,
 			type:1
 		}
+		this.page = 1
 	}
 	
 	gameURL(id){
@@ -32,6 +32,7 @@ class GameList extends Component{
 			type,
 			gameList:[]
 		})
+		this.page = 1
 		setTimeout(()=>{
 			this.getDataUp(this.props.routeParams.id)
 		},0)
@@ -41,7 +42,7 @@ class GameList extends Component{
 		let that = this
 		axios.post('/dola/app/game/newgetgamelist',qs.stringify({
 			type:that.state.type,
-			page:that.state.page,
+			page:that.page,
 			classId
 		})).then((res)=>{
 			
@@ -54,8 +55,60 @@ class GameList extends Component{
 		})
 	}
 	
+	loadMore(classId){
+		let that = this
+		axios.post('/dola/app/game/newgetgamelist',qs.stringify({
+			type:that.state.type,
+			page:that.page,
+			classId
+		})).then((res)=>{
+			
+			if(res.data.data.gameList.length){
+				that.setState({
+					gameList:that.state.gameList.concat(res.data.data.gameList)
+				})
+			}else{
+				alert('数据加载完毕了')
+			}
+			
+			
+			
+		}).catch((err)=>{
+			console.log(err,'数据请求错啦')
+		})
+	}
+	
 	componentWillMount(){
 		this.getDataUp(this.props.routeParams.id)
+	}
+	
+	
+	handler(){
+		
+		let that = this;
+		window.onscroll = function(){
+			let sc = window.scrollY;
+			let h = window.screen.height;
+			let scH = that.refs.bodyBox.scrollHeight;
+			if(sc+h === scH){
+				
+				that.page++
+				
+				that.loadMore(that.props.routeParams.id)
+			}
+			
+		}
+		
+	}
+	
+	componentDidMount(){
+		
+		this.handler.bind(this)()		
+	}
+	
+	componentWillUnmount(){
+		
+		window.onscroll = ''
 	}
 	
 	render(){
@@ -63,7 +116,7 @@ class GameList extends Component{
 		let {gameList} = this.state
 		
 		return(
-			<div className='list-container com-box'>
+			<div className='list-container com-box' ref='bodyBox'>
 				<header>
 					<div className='left' onClick={this.goBack.bind(this)}>
 						<i className='fa fa-angle-left'></i>

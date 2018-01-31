@@ -11,11 +11,9 @@ class Home extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			data:{
-				bannerList:[],
-				classList:[],
-				themeList:[],
-			},
+			bannerList:[],
+			classList:[],
+			themeList:[],
 			
 		}
 		this.page = 1
@@ -29,9 +27,13 @@ class Home extends Component {
 		}))
 		.then(({data})=>{
 			
+			console.log(data)
+			
 			that.setState({
 				
-				data:data.data
+				bannerList:data.data.bannerList,
+				classList:data.data.classList,
+				themeList:data.data.themeList,
 			})
 			
 		})
@@ -39,15 +41,74 @@ class Home extends Component {
 			console.log(err);
 		})
 	}
+	
+	loadMore(page){
+		
+		let that = this;
+		
+		axios.post('/dola/app/mainpage/newgetmainpagelist',qs.stringify({
+			page
+		}))
+		.then(({data})=>{
+			
+			console.log(data)
+			
+			if(data.data.themeList.length){
+				that.setState({
+				
+					themeList:that.state.themeList.concat(data.data.themeList)
+				})
+			}else{
+				window.onscroll = ''
+				alert('数据加载完毕了')
+			}
+			
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
+	}
+	
 	componentWillMount(){
 		
 		this.loadData(this.page)
 	}
+	
+	
+	handler(){
+		
+		let that = this;
+		window.onscroll = function(){
+			let sc = window.scrollY;
+			let h = window.screen.height;
+			let scH = that.refs.bodyBox.scrollHeight;
+			if(sc+h === scH){
+				
+				that.page++
+				
+				that.loadMore(that.page)
+			}
+			
+		}
+		
+	}
+	
+	componentDidMount(){
+		
+		this.handler.bind(this)()		
+	}
+	
+	componentWillUnmount(){
+		
+		window.onscroll = ''
+	}
+	
 	render(){
 		
-		let {data} = this.state
+		let {bannerList,themeList,classList} = this.state
+		
 		return (
-			<div className='home-container main-box '>
+			<div className='home-container main-box ' ref='bodyBox'>
 				<div className='com-box clearfix'>
 					<header>
 						<div className='left'></div>
@@ -56,9 +117,9 @@ class Home extends Component {
 							<i className='fa fa-search'></i>
 						</div>
 					</header>
-					<Banner data={data.bannerList}/>
-					<ClassList data={data.classList}/>
-					<Theme data={data.themeList}/>
+					<Banner data={bannerList}/>
+					<ClassList data={classList}/>
+					<Theme data={themeList}/>
 					<Foot path='/home'/>
 				</div>
 			</div>
