@@ -12,7 +12,8 @@ class GameList extends Component{
 				{title:'最新',id:2}
 			],
 			gameList:[],
-			type:1
+			type:1,
+			isLoadMore:true
 		}
 		this.page = 1
 	}
@@ -25,7 +26,8 @@ class GameList extends Component{
 	changeShow(type){
 		this.setState({
 			type,
-			gameList:[]
+			gameList:[],
+			isLoadMore:true
 		})
 		this.page = 1
 		setTimeout(()=>{
@@ -48,18 +50,16 @@ class GameList extends Component{
 						gameList:that.state.gameList.concat(res.data.data.gameList)
 					})
 				}else{
-					alert('数据加载完毕了')
+					
+					this.setState({
+						isLoadMore:false
+					})
 				}
-				
 			}else{
-				
 				that.setState({
 					gameList:res.data.data.gameList
 				})
 			}
-			
-			
-			
 		}).catch((err)=>{
 			console.log(err,'数据请求错啦')
 		})
@@ -70,31 +70,8 @@ class GameList extends Component{
 	}
 	
 	handler(){
-		
-		let that = this;
-		window.onscroll = function(){
-			let sc = window.scrollY;
-			let h = window.screen.height;
-			let scH = that.refs.bodyBox.scrollHeight;
-			if(sc+h === scH){
-				
-				that.page++
-				
-				that.getDataUp(that.props.routeParams.id)
-			}
-			
-		}
-		
-	}
-	
-	componentDidMount(){
-		
-		this.handler.bind(this)()		
-	}
-	
-	componentWillUnmount(){
-		
-		window.onscroll = ''
+		this.page++		
+		this.getDataUp(this.props.routeParams.id)
 	}
 	
 	render(){
@@ -145,7 +122,11 @@ class GameList extends Component{
 						))
 					}
 				</div>
-				
+				<div className='loadMore' onClick={this.state.isLoadMore?()=>this.handler():alert('数据已经加载完毕了')}>
+					{
+						this.state.isLoadMore?'点击加载更多':'数据加载完毕了'
+					}
+				</div>
 			</div>
 		)
 	}

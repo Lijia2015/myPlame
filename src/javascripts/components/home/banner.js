@@ -1,16 +1,9 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
-import Swiper from 'swiper'
+import Swiper from 'swiper/dist/js/swiper.min'
+
 class Banner extends Component{
 	
-	shouldComponentUpdate(props){
-		
-		if(props.data.length === this.props.data.length){
-			return false
-		}else{
-			return true
-		}
-	}
 	componentDidUpdate(){
 		
 		new Swiper('.banner',{

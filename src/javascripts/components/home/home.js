@@ -13,7 +13,10 @@ import loadMore from '../../../redux/actionCreaters/Home_loadMore'
 
 class Home extends Component {
 	constructor(props){
-		super(props)
+		super(props);
+		this.state = {
+			isLoadMore:true
+		}
 		this.page = 1
 	}
 	loadData(page){
@@ -33,8 +36,10 @@ class Home extends Component {
 					this.props.loadMore(data.data.themeList)
 					
 				}else{
-					window.onscroll = ''
-					alert('数据加载完毕了')
+					
+					this.setState({
+						isLoadMore:false
+					})
 				}
 				
 			}else{
@@ -55,30 +60,9 @@ class Home extends Component {
 	
 	handler(){
 		
-		let that = this;
-		window.onscroll = function(){
-			let sc = window.scrollY;
-			let h = window.screen.height;
-			let scH = that.refs.bodyBox.scrollHeight;
-			if(sc+h === scH){
+		this.page++
 				
-				that.page++
-				
-				that.loadData(that.page)
-			}
-			
-		}
-		
-	}
-	
-	componentDidMount(){
-		
-		this.handler.bind(this)()		
-	}
-	
-	componentWillUnmount(){
-		
-		window.onscroll = ''
+		this.loadData(this.page)
 	}
 	
 	render(){
@@ -100,6 +84,11 @@ class Home extends Component {
 					<Banner data={_bannerList}/>
 					<ClassList data={_classList}/>
 					<Theme data={_themeList}/>
+					<div className='loadMore' onClick={this.state.isLoadMore?()=>this.handler():alert('数据已经加载完毕了')}>
+						{
+							this.state.isLoadMore?'点击加载更多':'数据加载完毕了'
+						}
+					</div>
 					<Foot path='/home'/>
 				</div>
 			</div>

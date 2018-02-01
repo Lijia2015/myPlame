@@ -1,11 +1,10 @@
 import React,{Component} from 'react'
-import {hashHistory} from 'React-router'
 
 class Game extends Component{
 	
 	goBack(){
 		
-		hashHistory.push('/home')
+		this.props.history.goBack()
 	}
 	
 	render(){

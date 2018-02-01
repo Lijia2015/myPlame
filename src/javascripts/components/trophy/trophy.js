@@ -17,7 +17,8 @@ class Trophy extends Component {
 			gameList:[],
 			isShow : true,
 			type:1,
-			top:0
+			top:0,
+			isLoadMore:true
 		}
 		this.page = 1
 		this.changeShow = this.changeShow.bind(this)
@@ -27,6 +28,7 @@ class Trophy extends Component {
 		
 		this.setState({
 			type,
+			isLoadMore:true,
 			gameList:[]
 		})
 		this.page = 1
@@ -49,7 +51,9 @@ class Trophy extends Component {
 					})
 				}else{
 					
-					alert('数据加载完毕了')
+					this.setState({
+						isLoadMore:false
+					})
 				}
 				
 			}else{
@@ -71,30 +75,9 @@ class Trophy extends Component {
 	
 	handler(){
 		
-		let that = this;
-		window.onscroll = function(){
-			let sc = window.scrollY;
-			let h = window.screen.height;
-			let scH = that.refs.bodyBox.scrollHeight;
-			if(sc+h === scH){
+		this.page++
 				
-				that.page++
-				
-				that.loadData(that.state.type)
-			}
-			
-		}
-		
-	}
-	
-	componentDidMount(){
-		
-		this.handler.bind(this)()		
-	}
-	
-	componentWillUnmount(){
-		
-		window.onscroll = ''
+		this.loadData(this.state.type)
 	}
 	
 
@@ -136,6 +119,11 @@ class Trophy extends Component {
 									</button>
 								</div>
 							))
+						}
+					</div>
+					<div className='loadMore' onClick={this.state.isLoadMore?()=>this.handler():alert('数据已经加载完毕了')}>
+						{
+							this.state.isLoadMore?'点击加载更多':'数据加载完毕了'
 						}
 					</div>
 					<Foot path='/trophy'/>

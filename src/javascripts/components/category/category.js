@@ -9,7 +9,8 @@ class Category extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			classList:[]
+			classList:[],
+			isLoadMore:true
 		}
 		this.page=1
 	}
@@ -22,10 +23,12 @@ class Category extends Component {
 				if(res.data.data.classList.length){
 					this.setState({
 					
-						classList:res.data.data.classList
+						classList:this.state.classList.concat(res.data.data.classList)
 					})
 				}else{
-					alert('数据加载完毕了')
+					this.setState({
+						isLoadMore:false
+					})
 				}
 				
 			}else{
@@ -51,30 +54,9 @@ class Category extends Component {
 	
 	handler(){
 		
-		let that = this;
-		window.onscroll = function(){
-			let sc = window.scrollY;
-			let h = window.screen.height;
-			let scH = that.refs.bodyBox.scrollHeight;
-			if(sc+h === scH){
+		this.page++
 				
-				that.page++
-				
-				that.getDataUp(that.page)
-			}
-			
-		}
-		
-	}
-	
-	componentDidMount(){
-		
-		this.handler.bind(this)()		
-	}
-	
-	componentWillUnmount(){
-		
-		window.onscroll = ''
+		this.getDataUp(this.page)
 	}
 	
 	render(){
@@ -108,6 +90,13 @@ class Category extends Component {
 						}
 						
 					</div>
+					
+					<div className='loadMore' onClick={this.state.isLoadMore?()=>this.handler():alert('数据已经加载完毕了')}>
+						{
+							this.state.isLoadMore?'点击加载更多':'数据加载完毕了'
+						}
+					</div>
+					
 					<Foot path='/category'/>
 				</div>
 			</div>

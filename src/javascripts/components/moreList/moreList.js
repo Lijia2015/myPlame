@@ -7,19 +7,13 @@ class MoreList extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			gameList:[]
+			gameList:[],
+			isLoadMore:true
 		}
 		this.page=1
 	}
-	
 	goBack(){
-		
 		this.props.history.goBack()
-	}
-	
-	gameURL(id){
-		
-		return 'http://www.dolapocket.com/game/index_new.php?gid='+id+'#backUrl=http://m.dolapocket.com/#/gameDetail/'+id
 	}
 	
 	getDataUp(id){
@@ -36,7 +30,10 @@ class MoreList extends Component{
 						gameList:this.state.gameList.concat(res.data.data.gameList)
 					})
 				}else{
-					alert('数据加载完毕了')
+					
+					this.setState({
+						isLoadMore:false
+					})
 				}
 				
 			}else{
@@ -56,38 +53,13 @@ class MoreList extends Component{
 	}
 	
 	handler(){
-		
-		let that = this;
-		window.onscroll = function(){
-			let sc = window.scrollY;
-			let h = window.screen.height;
-			let scH = that.refs.bodyBox.scrollHeight;
-			if(sc+h === scH){
-				
-				that.page++
-				
-				that.getDataUp(that.props.routeParams.id)
-			}
-			
-		}
-		
-	}
-	
-	componentDidMount(){
-		
-		this.handler.bind(this)()		
-	}
-	
-	componentWillUnmount(){
-		
-		window.onscroll = ''
+		this.page++
+		this.getDataUp(this.props.routeParams.id)	
 	}
 	
 	render(){
 		
 		let {gameList} = this.state
-		
-		
 		return (
 			
 			<div className='more-container com-box' ref='bodyBox'>
@@ -120,7 +92,11 @@ class MoreList extends Component{
 						))
 					}
 				</div>
-				
+				<div className='loadMore' onClick={this.state.isLoadMore?()=>this.handler():alert('数据已经加载完毕了')}>
+					{
+						this.state.isLoadMore?'点击加载更多':'数据加载完毕了'
+					}
+				</div>
 			</div>
 		)
 	}
